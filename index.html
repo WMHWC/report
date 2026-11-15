@@ -3,7 +3,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>결과보고 그래프</title>
-<script src="/lock.js?v=3"></script>
+<script src="/lock.js?v=4"></script>
 <style>
 @font-face{font-family:"WandoCleansea";font-weight:400;src:url(/nameplate/fonts/cleanseaR.woff2) format("woff2")}
 @font-face{font-family:"WandoCleansea";font-weight:700;src:url(/nameplate/fonts/cleanseaB.woff2) format("woff2")}
@@ -11,7 +11,7 @@
 *{box-sizing:border-box}[hidden]{display:none!important}
 html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"WandoCleansea","Malgun Gothic","맑은 고딕",sans-serif}
 button,input,select,textarea{font:inherit;color:inherit}
-header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 18px;background:var(--panel);border-bottom:1.5px solid var(--line)}
+header{position:sticky;top:0;z-index:20;max-width:1180px;margin:0 auto;border-radius:0 0 12px 12px;border:1.5px solid var(--line);border-top:0;display:flex;align-items:center;gap:12px;padding:10px 18px;background:var(--panel)}
 header h1{margin:0;font-size:20px;flex:1}
 header small{color:var(--muted);font-size:12px;font-weight:400}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--panel);cursor:pointer;text-decoration:none;font-weight:700;font-size:14px}
@@ -20,7 +20,7 @@ header small{color:var(--muted);font-size:12px;font-weight:400}
 .btn.pri:disabled{opacity:.45;cursor:default}
 main{max-width:1180px;margin:0 auto;padding:20px 18px 80px}
 .drop{display:flex;flex-direction:column;align-items:center;gap:10px;padding:34px 20px;border:2.5px dashed #9fb2c6;border-radius:16px;background:var(--panel);text-align:center;cursor:pointer}
-.drop.on{border-color:var(--accent);background:#eef4fb}
+.drop.on{border-color:var(--accent)}
 .drop b{font-size:19px}.drop span{color:var(--muted);font-size:14px}
 .note{color:var(--muted);font-size:13px;line-height:1.6}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}
@@ -43,7 +43,7 @@ main{max-width:1180px;margin:0 auto;padding:20px 18px 80px}
 .extra .head{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
 .extra .head .x{margin-left:auto}
 .f{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;font-size:13px;color:var(--muted)}
-.f input[type=text],.f input[type=number],.f select,.f textarea{padding:7px 9px;border:1.5px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font-size:14px}
+.f input[type=text],.f input[type=number],.f select,.f textarea{padding:7px 9px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font-size:14px}
 .f textarea{min-height:120px;font-family:Consolas,monospace}
 .grid5{display:grid;grid-template-columns:auto repeat(5,1fr);gap:4px;align-items:center;font-size:12px}
 .grid5 input{width:100%;padding:5px 4px;border:1.5px solid var(--line);border-radius:6px;text-align:center;font-size:14px}
@@ -51,7 +51,7 @@ main{max-width:1180px;margin:0 auto;padding:20px 18px 80px}
 .cols{display:flex;flex-wrap:wrap;gap:8px}
 .cols label{display:flex;align-items:center;gap:4px;font-size:12px}
 .cols input[type=color]{width:34px;height:26px;padding:0;border:1px solid var(--line);border-radius:6px;background:#fff}
-.prev{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.prev{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:6px}
 .prev canvas{max-width:100%;max-height:420px;border:1px dashed #c4ced8}
 .prev .meta{align-self:stretch;display:flex;justify-content:space-between}
 .warn{color:#b45309;font-size:13px}
