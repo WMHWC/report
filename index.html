@@ -2,102 +2,131 @@
 <html lang="ko"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>결과보고 그래프</title>
-<script src="/lock.js?v=4"></script>
+<title>그래프</title>
+<script src="/lock.js?v=5"></script>
 <style>
 @font-face{font-family:"WandoCleansea";font-weight:400;src:url(/nameplate/fonts/cleanseaR.woff2) format("woff2")}
 @font-face{font-family:"WandoCleansea";font-weight:700;src:url(/nameplate/fonts/cleanseaB.woff2) format("woff2")}
-:root{--bg:#e9edf1;--panel:#fff;--ink:#1d2733;--muted:#5d6b7a;--line:#d3dae2;--accent:#1f5fa8;--soft:#f4f7fa;--ok:#1a7f4b}
+:root{--bg:#e9edf1;--panel:#fff;--ink:#1d2733;--muted:#4f5d6c;--line:#cfd7e0;--accent:#1f5fa8;--soft:#f4f7fa;--ok:#1a7f4b}
 *{box-sizing:border-box}[hidden]{display:none!important}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"WandoCleansea","Malgun Gothic","맑은 고딕",sans-serif}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"WandoCleansea","Malgun Gothic","맑은 고딕",sans-serif;font-size:17px}
 button,input,select,textarea{font:inherit;color:inherit}
-header{position:sticky;top:0;z-index:20;max-width:1180px;margin:0 auto;border-radius:0 0 12px 12px;border:1.5px solid var(--line);border-top:0;display:flex;align-items:center;gap:12px;padding:10px 18px;background:var(--panel)}
-header h1{margin:0;font-size:20px;flex:1}
-header small{color:var(--muted);font-size:12px;font-weight:400}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--panel);cursor:pointer;text-decoration:none;font-weight:700;font-size:14px}
+main{max-width:1180px;margin:0 auto;padding:22px 18px 90px}
+h1{margin:0 0 14px;font-size:28px}h1 small{color:var(--muted);font-size:14px;font-weight:400}
+h2{margin:0 0 12px;font-size:22px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.steps button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:14px 6px 12px;border:2.5px solid var(--line);border-radius:14px;background:var(--panel);cursor:pointer;font-weight:700;font-size:20px}
+.steps button small{font-weight:400;font-size:14px;color:var(--muted)}
+.steps button.on{background:var(--accent);border-color:var(--accent);color:#fff}.steps button.on small{color:#dbe7f5}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 18px;border-radius:12px;border:2px solid var(--line);background:var(--panel);cursor:pointer;text-decoration:none;font-weight:700;font-size:17px}
 .btn:hover{border-color:var(--accent)}
 .btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn.pri:disabled{opacity:.45;cursor:default}
-main{max-width:1180px;margin:0 auto;padding:20px 18px 80px}
-.drop{display:flex;flex-direction:column;align-items:center;gap:10px;padding:34px 20px;border:2.5px dashed #9fb2c6;border-radius:16px;background:var(--panel);text-align:center;cursor:pointer}
+.btn.big{font-size:20px;padding:15px 26px}
+.btn.del{color:#c0392b}
+.tiny{font-size:15px;padding:7px 12px}
+.panel{background:var(--panel);border:1.5px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.types button{padding:16px 6px;border:2.5px solid var(--line);border-radius:14px;background:var(--panel);cursor:pointer;font-weight:700;font-size:19px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.types button span{font-size:30px;line-height:1}
+.types button.on{border-color:var(--accent);background:var(--soft);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.drop{display:flex;flex-direction:column;align-items:center;gap:8px;padding:28px 20px;border:3px dashed #9fb2c6;border-radius:16px;background:var(--panel);text-align:center;cursor:pointer;margin-bottom:14px}
 .drop.on{border-color:var(--accent)}
-.drop b{font-size:19px}.drop span{color:var(--muted);font-size:14px}
-.note{color:var(--muted);font-size:13px;line-height:1.6}
-.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}
-.bar .grow{flex:1}
-.chip{font-size:13px;padding:5px 10px;border-radius:999px;background:var(--soft);border:1px solid var(--line)}
-.chip.ok{background:#e7f6ee;border-color:#a7dcc0;color:var(--ok)}
-.card{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
-.card.changed{border-color:var(--accent)}
-.row{display:flex;gap:14px;align-items:flex-start}
-.thumb{flex:0 0 200px;height:130px;border-radius:8px;background:var(--soft) center/contain no-repeat;border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);font-size:12px;text-align:center;padding:6px}
+.drop b{font-size:20px}.drop span{color:var(--muted);font-size:15px}
+.note{color:var(--muted);font-size:16px;line-height:1.7;margin:0 0 12px}
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);margin:14px 0;font-size:15px}.or::before,.or::after{content:"";flex:1;height:1.5px;background:var(--line)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}.bar .grow{flex:1}
+.chip{font-size:15px;padding:6px 12px;border-radius:999px;background:var(--soft);border:1px solid var(--line)}
+.chip.auto{background:#e7f6ee;border-color:#a7dcc0;color:var(--ok);font-weight:700}
+.card{background:var(--panel);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin:14px 0}
+.card.changed{border-color:var(--accent);border-width:2.5px}
+.row{display:flex;gap:16px;align-items:flex-start}
+.thumb{flex:0 0 210px;height:136px;border-radius:10px;background:var(--soft) center/contain no-repeat;border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);font-size:14px;text-align:center;padding:6px}
 .info{flex:1;min-width:0}
-.where{font-size:17px;font-weight:700;margin:2px 0 4px}
-.meta{font-size:13px;color:var(--muted)}
-.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.seg button{padding:7px 12px;border-radius:9px;border:1.5px solid var(--line);background:var(--panel);cursor:pointer;font-size:14px}
-.seg button.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.where{font-size:20px;font-weight:700;margin:2px 0 4px}
+.meta{font-size:14.5px;color:var(--muted)}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.seg button{padding:10px 16px;border-radius:11px;border:2px solid var(--line);background:var(--panel);cursor:pointer;font-size:17px;font-weight:700}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .seg .add{border-style:dashed;color:var(--accent)}
-.editor{margin-top:12px;padding:12px;border-radius:10px;background:var(--soft);display:grid;grid-template-columns:minmax(260px,360px) 1fr;gap:14px}
-.extra{margin:10px 0 0 26px;border-left:4px solid #9fb2c6;padding-left:12px}
-.extra .head{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.editor{margin-top:14px;padding:14px;border-radius:12px;background:var(--soft);display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:16px}
+.extra{margin:12px 0 0 26px;border-left:5px solid #9fb2c6;padding-left:14px}
+.extra .head{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;flex-wrap:wrap}
 .extra .head .x{margin-left:auto}
-.f{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;font-size:13px;color:var(--muted)}
-.f input[type=text],.f input[type=number],.f select,.f textarea{padding:7px 9px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font-size:14px}
-.f textarea{min-height:120px;font-family:Consolas,monospace}
-.grid5{display:grid;grid-template-columns:auto repeat(5,1fr);gap:4px;align-items:center;font-size:12px}
-.grid5 input{width:100%;padding:5px 4px;border:1.5px solid var(--line);border-radius:6px;text-align:center;font-size:14px}
-.grid5 .h{text-align:center;color:var(--muted)}
-.cols{display:flex;flex-wrap:wrap;gap:8px}
-.cols label{display:flex;align-items:center;gap:4px;font-size:12px}
-.cols input[type=color]{width:34px;height:26px;padding:0;border:1px solid var(--line);border-radius:6px;background:#fff}
-.prev{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:6px}
-.prev canvas{max-width:100%;max-height:420px;border:1px dashed #c4ced8}
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;font-size:16px;color:var(--muted);font-weight:700}
+.f input[type=text],.f input[type=number],.f select,.f textarea{padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font-size:17px;font-weight:400}
+.f textarea{min-height:130px;font-family:Consolas,"Malgun Gothic",monospace}
+.f .hint{font-weight:400;font-size:14.5px}
+.grid5{display:grid;grid-template-columns:auto repeat(5,1fr);gap:5px;align-items:center;font-size:14.5px;font-weight:400;color:var(--ink)}
+.grid5 input{width:100%;padding:8px 4px;border:2px solid var(--line);border-radius:8px;text-align:center;font-size:17px;background:var(--panel)}
+.grid5 .h{text-align:center;color:var(--muted);font-size:13.5px}
+.cols{display:flex;flex-wrap:wrap;gap:10px;font-weight:400;color:var(--ink)}
+.cols label{display:flex;align-items:center;gap:5px;font-size:15px}
+.cols input[type=color]{width:42px;height:32px;padding:0;border:1px solid var(--line);border-radius:6px;background:#fff}
+.cols input[type=number],.cols input[type=text]{padding:8px 10px;border:2px solid var(--line);border-radius:8px;font-size:17px;background:var(--panel)}
+.chk{display:flex;align-items:center;gap:8px;font-size:16px;margin-bottom:10px}.chk input{width:20px;height:20px}
+.prev{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.prev canvas{max-width:100%;max-height:440px;border:1px dashed #c4ced8;background:#fff}
 .prev .meta{align-self:stretch;display:flex;justify-content:space-between}
-.warn{color:#b45309;font-size:13px}
-.tiny{font-size:12px;padding:5px 9px}
-details.help{margin-top:26px;background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:14px 18px}
-details.help summary{cursor:pointer;font-weight:700;font-size:16px}
-details.help ol{line-height:1.9;font-size:15px}
-.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1d2733;color:#fff;padding:10px 18px;border-radius:10px;font-size:14px;z-index:60}
-@media (max-width:820px){.editor{grid-template-columns:1fr}.row{flex-direction:column}.thumb{flex-basis:auto;width:100%}}
+.made{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:12px 0}
+.made figure{margin:0;background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:8px;text-align:center}
+.made canvas{width:100%;height:auto;background:#fff;border-radius:6px}
+.made figcaption{font-weight:700;font-size:16px;margin-top:6px}
+.next{display:flex;justify-content:flex-end;gap:10px;margin-top:16px;flex-wrap:wrap}
+.warn{color:#b45309;font-size:16px;line-height:1.6}
+.empty{padding:34px 20px;text-align:center;color:var(--muted);font-size:18px;line-height:1.8}
+.savebar{position:sticky;bottom:0;z-index:20;display:flex;justify-content:center;padding:12px;margin:0 -18px;background:linear-gradient(transparent,var(--bg) 35%)}
+details.help{margin-top:22px;background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:16px 20px}
+details.help summary{cursor:pointer;font-weight:700;font-size:18px}
+details.help ol{line-height:2;font-size:17px}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#1d2733;color:#fff;padding:12px 22px;border-radius:12px;font-size:17px;z-index:60}
+html[data-theme=dark] .chip.auto{background:#143024;border-color:#2c6b4c;color:#7fdcae}
+html[data-theme=dark] .warn{color:#f0b35a}
+@media (max-width:820px){.editor{grid-template-columns:1fr}.row{flex-direction:column}.thumb{flex-basis:auto;width:100%}.types{grid-template-columns:repeat(2,1fr)}.steps button{font-size:17px}}
 </style></head><body>
-<header>
- <h1>📊 결과보고 그래프 <small>v1.0</small></h1>
- <button class="btn pri" id="saveBtn" disabled>💾 새 한글 파일 받기</button>
-</header>
 <main>
- <label class="drop" id="drop">
-  <input type="file" id="hwpIn" accept=".hwpx" hidden>
-  <b>① 한글 파일(.hwpx)을 여기에 끌어다 놓거나 눌러서 고르세요</b>
-  <span>.hwp 파일이면 한글에서 「다른 이름으로 저장 → HWPX」로 바꿔서 넣어주세요.</span>
-  <span>파일은 이 컴퓨터 안에서만 처리돼요. 어디에도 올라가지 않아요.</span>
- </label>
-
- <div id="work" hidden>
-  <div class="bar">
-   <span class="chip" id="docName"></span>
-   <span class="chip" id="picCount"></span>
-   <span class="grow"></span>
-   <label class="btn tiny"><input type="file" id="xlsIn" accept=".xlsx" hidden>📗 사전·사후 엑셀 넣기</label>
-   <span class="chip" id="xlsName" hidden></span>
-   <label class="f" style="margin:0;flex-direction:row;align-items:center;gap:6px">글씨체
-    <select id="fontSel"><option value="'Malgun Gothic','맑은 고딕','Noto Sans KR','Noto Sans CJK KR',sans-serif">맑은 고딕</option><option value="WandoCleansea,'Malgun Gothic',sans-serif">완도 청정바다체</option></select></label>
-  </div>
-  <p class="note">② 그림마다 「그대로 / 그래프로 바꾸기 / 사진으로 바꾸기」를 고르세요. 「＋ 위에 / ＋ 아래에」로 그림을 하나 더 넣을 수 있어요. 다 되면 위의 <b>💾 새 한글 파일 받기</b>를 누르세요. 글자와 표는 그대로예요.</p>
-  <div id="list"></div>
+ <h1>그래프 <small>v1.1</small></h1>
+ <div class="steps" id="steps">
+  <button type="button" data-s="1">① 그래프 만들기<small id="st1">엑셀이나 숫자를 넣어요</small></button>
+  <button type="button" data-s="2">② 그래프 고치기<small id="st2">제목 · 색 · 모양</small></button>
+  <button type="button" data-s="3">③ 한글에 넣기<small id="st3">한글 파일의 그림을 바꿔요</small></button>
  </div>
 
- <details class="help">
-  <summary>📎 그래프 그림만 받아서 한글에 직접 넣는 법</summary>
-  <ol>
-   <li>그래프 미리보기 아래 <b>「그림 받기(PNG)」</b>를 눌러 저장해요.</li>
-   <li>한글에서 그림 넣을 곳을 클릭하고 <b>입력 → 그림</b>을 눌러요.</li>
-   <li>받은 그림을 고르고, 아래쪽 <b>「문서에 포함」</b>에 체크한 뒤 <b>넣기</b>를 눌러요.</li>
-   <li>넣은 그림을 <b>두 번 클릭 → 개체 속성 → 기본</b> 탭에서 <b>「글자처럼 취급」</b>에 체크하고 설정을 눌러요.</li>
-   <li>크기는 <b>너비만</b> 바꾸고 「크기 고정」 대신 <b>비율 유지</b>로 두면 그래프가 찌그러지지 않아요.</li>
-  </ol>
- </details>
+ <section id="s1">
+  <div class="panel">
+   <h2>어떤 그래프를 만들까요?</h2>
+   <div class="types" id="types"></div>
+   <div id="mk"></div>
+  </div>
+  <div id="madeBox"></div>
+ </section>
+
+ <section id="s2" hidden><div id="edList"></div></section>
+
+ <section id="s3" hidden>
+  <label class="drop" id="drop">
+   <input type="file" id="hwpIn" accept=".hwpx" hidden>
+   <b id="dropT">한글 파일(.hwpx)을 여기에 끌어다 놓거나 눌러서 고르세요</b>
+   <span>.hwp 파일이면 한글에서 「다른 이름으로 저장 → HWPX」로 바꿔서 넣어주세요.</span>
+   <span>파일은 이 컴퓨터 안에서만 처리돼요. 어디에도 올라가지 않아요.</span>
+  </label>
+  <div id="work" hidden>
+   <div class="bar"><span class="chip" id="docName"></span><span class="chip" id="picCount"></span></div>
+   <p class="note">그림마다 <b>그대로 / 그래프 넣기 / 사진 넣기</b>를 고르세요. 「＋ 위에 / ＋ 아래에」로 그림을 하나 더 넣을 수 있어요. 글자와 표는 그대로예요.</p>
+   <div id="list"></div>
+   <div class="savebar"><button class="btn pri big" id="saveBtn" disabled>💾 새 한글 파일 받기</button></div>
+  </div>
+  <details class="help">
+   <summary>📎 그래프 그림만 받아서 한글에 직접 넣는 법</summary>
+   <ol>
+    <li><b>② 그래프 고치기</b>에서 <b>「⬇ 그림 받기」</b>를 눌러 저장해요.</li>
+    <li>한글에서 그림 넣을 곳을 클릭하고 <b>입력 → 그림</b>을 눌러요.</li>
+    <li>받은 그림을 고르고, 아래쪽 <b>「문서에 포함」</b>에 체크한 뒤 <b>넣기</b>를 눌러요.</li>
+    <li>넣은 그림을 <b>두 번 클릭 → 개체 속성 → 기본</b> 탭에서 <b>「글자처럼 취급」</b>에 체크하고 설정을 눌러요.</li>
+    <li>크기를 바꿀 때는 모서리를 잡고 끌어야 그래프가 찌그러지지 않아요.</li>
+   </ol>
+  </details>
+ </section>
 </main>
 
 <script>
@@ -367,31 +396,31 @@ function drawAge(ctx,W,H,g){
 }
 const DRAW={prepost:drawPrePost,sat:drawSat,sex:drawSex,age:drawAge};
 
-/* ====================== 그림 하나의 설정(그래프/사진) ====================== */
+/* ====================== 만든 그래프들 ====================== */
+let GRAPHS=[],gSeq=0;
+const TYPE_ICON={prepost:'📊',sat:'😊',sex:'🚻',age:'🎂'};
 function newGraph(type,region){
-  const saved=store.get('colors_'+type,null);
-  const d=DEF[type];
-  return{type,region:region||'',titleT:d.title,title:'',colors:(saved&&saved.length===d.c.length?saved:d.c).slice(),cn:d.cn.slice(),
-    pp:[],sheet:'',ppText:'',sat:SAT_ITEMS.map(()=>[0,0,0,0,0]),sex:['',''],age:[['60대',''],['70대',''],['80대 이상','']]};
+  const saved=store.get('colors_'+type,null),d=DEF[type];
+  return{id:'g'+(++gSeq),type,region:region||'',titleT:d.title,colors:(saved&&saved.length===d.c.length?saved:d.c).slice(),cn:d.cn.slice(),ratio:String(d.ratio),
+    ppText:'',sat:SAT_ITEMS.map(()=>[0,0,0,0,0]),sex:['',''],age:[['60대',''],['70대',''],['80대 이상','']]};
 }
-function gTitle(g){return(g.titleOverride!=null?g.titleOverride:g.titleT.replace('{r}',g.region||'OO면'))}
-
-// 그림이 들어갈 크기(HWPUNIT)와 캔버스
+const gTitle=g=>g.titleOverride!=null?g.titleOverride:g.titleT.replace('{r}',g.region||'OO면');
+const gName=g=>TYPE_NAME[g.type]+(g.region?' · '+g.region:'');
+const byId=id=>GRAPHS.find(g=>g.id===id);
+const regionOf=n=>{n=String(n||'').trim();return!n?'':/(읍|면|동)$/.test(n)?n:n+'면'};
+const normR=r=>String(r||'').replace(/\s/g,'').replace(/(읍|면|동)$/,'');
 const HU=75; // 1픽셀(96dpi) = 75 HWPUNIT
-function targetSize(slot){ // slot:{w,h,ratioSel,type}
-  let w=slot.w,h=slot.h;
-  if(slot.ratioSel&&slot.ratioSel!=='keep')h=Math.round(w/+slot.ratioSel);
-  return{w,h};
-}
+const BASEW=48190; // 본문 너비(약 17cm)
+const cm=(w,h)=>(w/7200*2.54).toFixed(1)+' × '+(h/7200*2.54).toFixed(1)+' cm';
+function parsePP(t){return String(t).split(/\n/).map(l=>l.trim()).filter(Boolean).map(l=>{const n=l.split(/[\s,\t]+/).map(Number).filter(x=>!isNaN(x));return n.length>=3?[n[1],n[2]]:n.length===2?n:null}).filter(Boolean)}
 function renderGraph(g,wHU,hHU,scale){
   const W=wHU/HU,H=hHU/HU,cv=document.createElement('canvas');
   cv.width=Math.round(W*scale);cv.height=Math.round(H*scale);
   const ctx=cv.getContext('2d');ctx.scale(scale,scale);
-  const gg=Object.assign({},g,{title:gTitle(g)});
-  if(g.type==='prepost')gg.pp=parsePP(g.ppText);
+  const gg=Object.assign({},g,{title:gTitle(g)});if(g.type==='prepost')gg.pp=parsePP(g.ppText);
   DRAW[g.type](ctx,W,H,gg);return cv;
 }
-function parsePP(t){return t.split(/\n/).map(l=>l.trim()).filter(Boolean).map(l=>{const n=l.split(/[\s,\t]+/).map(Number).filter(x=>!isNaN(x));return n.length>=3?[n[1],n[2]]:n.length===2?n:null}).filter(Boolean)}
+const ownSize=(g,w)=>({w,h:Math.round(w/+g.ratio)});
 function renderPhoto(img,wHU,hHU,fit){
   const r=wHU/hHU,maxW=Math.min(2400,img.naturalWidth),cv=document.createElement('canvas');
   cv.width=maxW;cv.height=Math.round(maxW/r);const ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height);
@@ -400,142 +429,184 @@ function renderPhoto(img,wHU,hHU,fit){
   else{if(ir>r){dh=dw/ir;dy=(cv.height-dh)/2}else{dw=dh*ir;dx=(cv.width-dw)/2}ctx.drawImage(img,dx,dy,dw,dh)}
   return cv;
 }
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}
+function paint(cv,src){cv.width=src.width;cv.height=src.height;cv.getContext('2d').drawImage(src,0,0)}
+const whenFont=fn=>{if(document.fonts&&document.fonts.load)document.fonts.load(F(16)).then(fn,fn);else fn()};
 
-/* ====================== 화면 그리기 ====================== */
-function renderList(){
-  const L=$('list');L.innerHTML='';
-  DOC.items.forEach(it=>L.appendChild(itemCard(it)));
-  refreshSave();
+/* ====================== 단계 바꾸기 ====================== */
+let STEP=1;
+function go(n){STEP=n;[1,2,3].forEach(i=>{$('s'+i).hidden=i!==n});
+  document.querySelectorAll('#steps button').forEach(b=>b.classList.toggle('on',+b.dataset.s===n));
+  if(n===1)renderMade();if(n===2)renderEdit();if(n===3){autoAssign();if(DOC)renderList()}
+  window.scrollTo({top:0})}
+$('steps').addEventListener('click',e=>{const b=e.target.closest('button');if(b)go(+b.dataset.s)});
+function stepInfo(){$('st1').textContent=GRAPHS.length?`그래프 ${GRAPHS.length}개 만들었어요`:'엑셀이나 숫자를 넣어요'}
+
+/* ====================== 숫자 넣는 칸 (①, ② 같이 써요) ====================== */
+function dataForm(g,D,changed){
+  if(g.type==='prepost'){
+    D.innerHTML=`<label class="f">사전 · 사후 점수<span class="hint">한 줄에 한 명씩 「사전 사후」. <b>엑셀에서 사전·사후 칸을 복사해서 붙여넣어도 돼요.</b></span><textarea placeholder="8 4&#10;6 2&#10;4 0"></textarea><span class="hint" data-k="n"></span></label>`;
+    const ta=D.querySelector('textarea'),n=D.querySelector('[data-k=n]'),cnt=()=>{n.textContent=parsePP(g.ppText).length+'명'};
+    ta.value=g.ppText;cnt();ta.oninput=()=>{g.ppText=ta.value;cnt();changed()};
+  }else if(g.type==='sat'){
+    D.innerHTML=`<div class="f">만족도 표 (사람 수)<div class="grid5"><span></span>${SAT_LV.map(x=>`<span class="h">${x.replace(' ','<br>')}</span>`).join('')}
+      ${SAT_ITEMS.map((it,i)=>`<span>${it}</span>${SAT_LV.map((_,k)=>`<input type="number" min="0" data-i="${i}" data-j="${k}" value="${g.sat[i][k]||''}">`).join('')}`).join('')}</div><span class="hint" data-k="sum"></span></div>`;
+    const sum=()=>{const t=g.sat.map(r=>r.reduce((a,b)=>a+(+b||0),0));D.querySelector('[data-k=sum]').textContent='항목별 합계: '+t.join(' / ')+(new Set(t).size>1?'  ⚠ 합계가 서로 달라요':'')};
+    D.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{g.sat[+inp.dataset.i][+inp.dataset.j]=+inp.value||0;sum();changed()});sum();
+  }else if(g.type==='sex'){
+    D.innerHTML=`<div class="f">인원 (명)<div class="cols"><label>남 <input type="number" min="0" data-s="0" style="width:100px"></label><label>여 <input type="number" min="0" data-s="1" style="width:100px"></label></div></div>`;
+    D.querySelectorAll('input').forEach(inp=>{inp.value=g.sex[+inp.dataset.s];inp.oninput=()=>{g.sex[+inp.dataset.s]=inp.value;changed()}});
+  }else{
+    D.innerHTML=`<div class="f">연령별 인원 (명)${g.age.map((r,i)=>`<div class="cols" style="margin-top:5px"><input type="text" data-a="${i}" value="${esc(r[0])}" style="width:130px"><input type="number" min="0" data-n="${i}" value="${esc(r[1])}" style="width:100px"> 명</div>`).join('')}</div>`;
+    D.querySelectorAll('[data-a]').forEach(inp=>inp.oninput=()=>{g.age[+inp.dataset.a][0]=inp.value;changed()});
+    D.querySelectorAll('[data-n]').forEach(inp=>inp.oninput=()=>{g.age[+inp.dataset.n][1]=inp.value;changed()});
+  }
 }
+function hasData(g){return g.type==='prepost'?parsePP(g.ppText).length>0:g.type==='sat'?g.sat.some(r=>r.some(v=>+v>0)):g.type==='sex'?(+g.sex[0]||0)+(+g.sex[1]||0)>0:g.age.some(r=>+r[1]>0)}
+
+/* ====================== ① 그래프 만들기 ====================== */
+let MK='prepost',DRAFT=null;
+function renderTypes(){$('types').innerHTML=Object.keys(TYPE_NAME).map(k=>`<button type="button" data-t="${k}" class="${k===MK?'on':''}"><span>${TYPE_ICON[k]}</span>${TYPE_NAME[k]}</button>`).join('')}
+$('types').addEventListener('click',e=>{const b=e.target.closest('button');if(b){MK=b.dataset.t;renderTypes();renderMk()}});
+function renderMk(){
+  DRAFT=newGraph(MK,'');gSeq--; // 아직 목록에 안 넣은 초안
+  const M=$('mk');
+  M.innerHTML=(MK==='prepost'?`<label class="drop" id="xdrop"><input type="file" id="xlsIn" accept=".xlsx" hidden><b>📗 사전·사후 엑셀 파일을 여기에 끌어다 놓거나 눌러서 고르세요</b><span>시트마다 그래프가 하나씩 만들어져요. (시트 이름 = 지역, 칸은 연번 / 사전 / 사후)</span></label><div class="or">또는 직접 넣기</div>`:'')+
+   `<div class="editor" style="margin-top:0"><div><label class="f">지역 (예: 신지면)<input type="text" id="mkR"></label><div id="mkD"></div>
+     <button type="button" class="btn pri big" id="mkGo" style="width:100%">＋ 그래프 만들기</button></div>
+     <div class="prev"><canvas id="mkC"></canvas><div class="meta"><span>미리보기</span></div></div></div>`;
+  const draw=()=>{DRAFT.region=regionOf($('mkR').value);const s=ownSize(DRAFT,BASEW);paint($('mkC'),renderGraph(DRAFT,s.w,s.h,2))};
+  $('mkR').oninput=draw;dataForm(DRAFT,$('mkD'),draw);whenFont(draw);
+  $('mkGo').onclick=()=>{if(!hasData(DRAFT)){toast('숫자를 먼저 넣어주세요.');return}
+    DRAFT.id='g'+(++gSeq);GRAPHS.push(DRAFT);toast('✅ 그래프를 만들었어요: '+gName(DRAFT));renderMk();renderMade()};
+  const xi=$('xlsIn');if(xi)xi.onchange=e=>{takeXlsx(e.target.files[0]);e.target.value=''};
+}
+async function takeXlsx(f){if(!f)return;try{await openXlsx(f)}catch(e){alert('엑셀(.xlsx) 파일을 못 읽었어요.\n옛날 엑셀(.xls)이면 「다른 이름으로 저장 → Excel 통합 문서(.xlsx)」로 바꿔주세요.');return}
+  if(!XLS.sheets.length){alert('엑셀에서 「사전」「사후」 칸을 못 찾았어요.\n첫 줄에 사전, 사후라고 적혀 있어야 해요.');return}
+  XLS.sheets.forEach(sh=>{const g=newGraph('prepost',regionOf(sh.name));g.ppText=prePostFromRows(sh.rows).map(r=>r.join(' ')).join('\n');GRAPHS.push(g)});
+  toast(`✅ ${XLS.sheets.map(s=>s.name).join(', ')} 그래프 ${XLS.sheets.length}개를 만들었어요`,3500);renderMade()}
+function renderMade(){
+  stepInfo();const B=$('madeBox');
+  if(!GRAPHS.length){B.innerHTML='';return}
+  B.innerHTML=`<div class="panel"><h2>만든 그래프 ${GRAPHS.length}개</h2><div class="made">${GRAPHS.map(g=>`<figure><canvas data-g="${g.id}"></canvas><figcaption>${esc(gName(g))}</figcaption></figure>`).join('')}</div>
+   <div class="next"><button type="button" class="btn big" data-go="2">② 그래프 고치기 →</button><button type="button" class="btn pri big" data-go="3">③ 한글에 넣기 →</button></div></div>`;
+  B.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(+b.dataset.go));
+  whenFont(()=>B.querySelectorAll('canvas').forEach(c=>{const g=byId(c.dataset.g);if(!g)return;const s=ownSize(g,BASEW);paint(c,renderGraph(g,s.w,s.h,1))}));
+}
+
+/* ====================== ② 그래프 고치기 ====================== */
+const RATIOS=[['2.12','길게 (사전·사후 모양)'],['1.6','보통 (만족도 모양)'],[String(4/3),'4 : 3'],['1','정사각형']];
+function renderEdit(){
+  const L=$('edList');L.innerHTML='';
+  if(!GRAPHS.length){L.innerHTML='<div class="panel empty">아직 만든 그래프가 없어요.<br><button type="button" class="btn pri big" style="margin-top:12px">① 그래프 만들기로 가기</button></div>';L.querySelector('button').onclick=()=>go(1);return}
+  GRAPHS.forEach(g=>L.appendChild(editCard(g)));
+  const nx=document.createElement('div');nx.className='next';nx.innerHTML='<button type="button" class="btn big">← ① 그래프 더 만들기</button><button type="button" class="btn pri big">③ 한글에 넣기 →</button>';
+  nx.children[0].onclick=()=>go(1);nx.children[1].onclick=()=>go(3);L.appendChild(nx);
+}
+function editCard(g){
+  const d=document.createElement('div');d.className='card';
+  d.innerHTML=`<div class="where">${TYPE_ICON[g.type]} <span data-k="nm"></span></div>
+   <div class="editor"><div>
+    <label class="f">지역 (예: 신지면)<input type="text" data-k="region"></label>
+    <label class="f">제목<input type="text" data-k="title"></label>
+    <div data-k="data"></div>
+    <div class="f">색 바꾸기<span class="cols"></span><button type="button" class="btn tiny" data-k="resetc" style="align-self:flex-start">기본 색으로</button></div>
+    <label class="f">그림 모양<select data-k="ratio">${RATIOS.map(r=>`<option value="${r[0]}">${r[1]}</option>`).join('')}</select></label>
+   </div><div class="prev"><canvas></canvas><div class="meta"><span data-k="sz"></span></div>
+    <div class="bar" style="margin:0"><button type="button" class="btn" data-k="dl">⬇ 그림 받기</button><button type="button" class="btn del" data-k="del">🗑 지우기</button></div></div></div>`;
+  const q=k=>d.querySelector(`[data-k="${k}"]`),cv=d.querySelector('canvas');
+  const draw=()=>{const s=ownSize(g,BASEW);paint(cv,renderGraph(g,s.w,s.h,2));q('nm').textContent=gName(g);q('sz').textContent='한글에 넣을 크기 '+cm(s.w,s.h)};
+  q('region').value=g.region;q('region').oninput=e=>{g.region=e.target.value.trim();if(g.titleOverride==null)q('title').value=gTitle(g);draw()};
+  q('title').value=gTitle(g);q('title').oninput=e=>{g.titleOverride=e.target.value;draw()};
+  if(!RATIOS.some(r=>r[0]===g.ratio))q('ratio').insertAdjacentHTML('afterbegin',`<option value="${g.ratio}">기본 모양</option>`);
+  q('ratio').value=g.ratio;q('ratio').onchange=e=>{g.ratio=e.target.value;draw()};
+  const cols=()=>{const C=d.querySelector('.cols');C.innerHTML='';g.colors.forEach((c,i)=>{const l=document.createElement('label');l.innerHTML=`<input type="color" value="${c}">${esc(g.cn[i])}`;
+    l.querySelector('input').oninput=e=>{g.colors[i]=e.target.value;store.set('colors_'+g.type,g.colors);draw()};C.appendChild(l)})};cols();
+  q('resetc').onclick=()=>{g.colors=DEF[g.type].c.slice();store.set('colors_'+g.type,g.colors);cols();draw()};
+  dataForm(g,q('data'),draw);
+  q('dl').onclick=()=>{const s=ownSize(g,BASEW);renderGraph(g,s.w,s.h,3).toBlob(b=>download(b,gName(g).replace(' · ','_').replace(/[\\/:*?"<>|]/g,'')+'.png'),'image/png')};
+  q('del').onclick=()=>{if(!confirm(gName(g)+' 그래프를 지울까요?'))return;GRAPHS=GRAPHS.filter(x=>x!==g);stepInfo();renderEdit()};
+  whenFont(draw);return d;
+}
+
+/* ====================== ③ 한글에 넣기 ====================== */
+function guessType(it){const s=(it.where+' '+it.origName).replace(/\s/g,'');
+  return/만족/.test(s)?'sat':/성별/.test(s)?'sex':/연령|나이/.test(s)?'age':/우울|검사|사전|사후/.test(s)?'prepost':null}
+// 자리 이름(예: "4. 노인 우울 검사 · 신지면")을 보고 맞는 그래프를 알아서 골라줘요
+function autoAssign(){
+  if(!DOC||!GRAPHS.length)return;
+  const used=new Set(DOC.items.filter(i=>i.mode==='graph').map(i=>i.gid));
+  DOC.items.forEach(it=>{if(it.touched||it.mode!=='keep')return;const t=guessType(it);if(!t)return;
+    const g=GRAPHS.find(g=>g.type===t&&!used.has(g.id)&&normR(g.region)&&normR(g.region)===normR(it.region));
+    if(g){it.mode='graph';it.gid=g.id;it.fit=true;it.auto=true;used.add(g.id)}});
+}
+function renderList(){const L=$('list');L.innerHTML='';DOC.items.forEach(it=>L.appendChild(itemCard(it)));refreshSave()}
+function graphPick(spec,slot,redo){ // spec:{gid,fit}  slot:{w,h}|null(새 그림)
+  const ed=document.createElement('div');ed.className='editor';
+  if(!GRAPHS.length){ed.style.display='block';ed.innerHTML='<p class="warn" style="margin:0 0 10px">아직 만든 그래프가 없어요. 먼저 ①에서 그래프를 만들어주세요.</p><button type="button" class="btn pri">① 그래프 만들기로 가기</button>';ed.querySelector('button').onclick=()=>go(1);return ed}
+  if(!byId(spec.gid))spec.gid=GRAPHS[0].id;
+  ed.innerHTML=`<div><label class="f">넣을 그래프<select>${GRAPHS.map(g=>`<option value="${g.id}">${esc(gName(g))}</option>`).join('')}</select></label>
+    ${slot?`<label class="chk"><input type="checkbox"> 이 칸 크기에 딱 맞추기 (${cm(slot.w,slot.h)})</label>`:''}
+    <button type="button" class="btn tiny">✏️ 이 그래프 고치러 가기 (②)</button></div>
+    <div class="prev"><canvas></canvas><div class="meta"><span></span></div></div>`;
+  const sel=ed.querySelector('select'),chk=ed.querySelector('input[type=checkbox]'),cv=ed.querySelector('canvas'),meta=ed.querySelector('.meta span');
+  sel.value=spec.gid;if(chk)chk.checked=spec.fit!==false;
+  const draw=()=>{const g=byId(spec.gid),s=specSize(spec,slot,g);paint(cv,renderGraph(g,s.w,s.h,2));meta.textContent='들어갈 크기 '+cm(s.w,s.h)};
+  sel.onchange=()=>{spec.gid=sel.value;draw();redo&&redo()};if(chk)chk.onchange=()=>{spec.fit=chk.checked;draw()};
+  ed.querySelector('button').onclick=()=>go(2);whenFont(draw);return ed;
+}
+function specSize(spec,slot,g){return slot&&spec.fit!==false?{w:slot.w,h:slot.h}:ownSize(g,slot?slot.w:spec.w)}
+function photoPick(ph,size,ratioSel){ // size(): {w,h}
+  const ed=document.createElement('div');ed.className='editor';
+  ed.innerHTML=`<div><label class="f">넣을 사진<input type="file" accept="image/png,image/jpeg,image/gif,image/bmp,image/webp"></label>
+    <label class="f">맞추는 방법<select data-k="fit"><option value="cover">칸에 꽉 채우기 (가장자리 조금 잘림)</option><option value="contain">전체 보이기 (남는 곳은 흰색)</option></select></label>
+    ${ratioSel?`<label class="f">사진 모양<select data-k="r"><option value="1.835">가로로 긴 사진 (운영사진 칸 모양)</option><option value="${4/3}">4 : 3</option><option value="1">정사각형</option></select></label>`:''}</div>
+    <div class="prev"><canvas></canvas><div class="meta"><span></span></div></div>`;
+  const fi=ed.querySelector('input'),fs=ed.querySelector('[data-k=fit]'),rs=ed.querySelector('[data-k=r]'),cv=ed.querySelector('canvas'),meta=ed.querySelector('.meta span');
+  fs.value=ph.fit;if(rs)rs.value=ph.ratio;
+  const draw=()=>{const t=size();
+    if(!ph.img){cv.width=320;cv.height=Math.round(320*t.h/t.w);const c=cv.getContext('2d');c.fillStyle='#f4f7fa';c.fillRect(0,0,cv.width,cv.height);c.fillStyle='#667';c.font='17px sans-serif';c.textAlign='center';c.fillText('사진을 골라주세요',cv.width/2,cv.height/2);meta.textContent='';return}
+    paint(cv,renderPhoto(ph.img,t.w,t.h,ph.fit));meta.textContent=ph.name+' · '+cm(t.w,t.h)};
+  fi.onchange=()=>{const f=fi.files[0];if(!f)return;const img=new Image();img.onload=()=>{ph.img=img;ph.name=f.name;draw();refreshSave()};img.src=URL.createObjectURL(f)};
+  fs.onchange=()=>{ph.fit=fs.value;draw()};if(rs)rs.onchange=()=>{ph.ratio=rs.value;draw()};
+  draw();return ed;
+}
+const exW=it=>it.tac?it.w:Math.max(it.w,40000);
 function itemCard(it){
   const d=document.createElement('div');d.className='card'+(it.mode!=='keep'||it.extras.length?' changed':'');
-  const cm=(it.w/7200*2.54).toFixed(1)+' × '+(it.h/7200*2.54).toFixed(1)+' cm';
+  const redo=()=>{d.replaceWith(itemCard(it));refreshSave()};
   d.innerHTML=`<div class="row"><div class="thumb" ${it.thumb?`style="background-image:url(${it.thumb})"`:''}>${it.thumb?'':esc(it.thumbNote).replace('\n','<br>')}</div>
    <div class="info"><div class="where">${esc(it.where)}</div>
-   <div class="meta">칸 크기 ${cm}${it.tac?' · 글자처럼 취급':' · 떠 있는 그림'}${it.origName?' · '+esc(it.origName):''}</div>
+   <div class="meta">칸 크기 ${cm(it.w,it.h)}${it.origName?' · '+esc(it.origName):''} ${it.auto&&it.mode==='graph'?'<span class="chip auto">맞는 그래프를 알아서 골랐어요</span>':''}</div>
    <div class="seg">
-    <button data-m="keep">그대로</button><button data-m="graph">📊 그래프로 바꾸기</button><button data-m="photo">🖼 사진으로 바꾸기</button>
-    <button class="add" data-a="above">＋ 위에 넣기</button><button class="add" data-a="below">＋ 아래에 넣기</button>
+    <button type="button" data-m="keep">그대로</button><button type="button" data-m="graph">📊 그래프 넣기</button><button type="button" data-m="photo">🖼 사진 넣기</button>
+    <button type="button" class="add" data-a="above">＋ 위에 넣기</button><button type="button" class="add" data-a="below">＋ 아래에 넣기</button>
    </div></div></div>`;
-  d.querySelectorAll('[data-m]').forEach(b=>{b.classList.toggle('on',b.dataset.m===it.mode);b.onclick=()=>{
-    if(it.mode===b.dataset.m)return;it.mode=b.dataset.m;
-    if(it.mode==='graph'&&!it.g)it.g=newGraph(guessType(it),it.region);
-    if(it.mode==='photo'&&!it.ph)it.ph={fit:'cover'};
-    d.replaceWith(itemCard(it));refreshSave()}});
-  d.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{
-    it.extras.push({pos:b.dataset.a,mode:'graph',g:newGraph('sex',it.region),ph:{fit:'cover'},ratioSel:String(DEF.sex.ratio)});
-    d.replaceWith(itemCard(it));refreshSave()});
-  const slot={w:it.w,h:it.h,get ratioSel(){return it.ratioSel},set ratioSel(v){it.ratioSel=v}};
-  if(it.mode!=='keep')d.appendChild(editor(it,slot,it.mode,false,()=>{}));
+  d.querySelectorAll('[data-m]').forEach(b=>{b.classList.toggle('on',b.dataset.m===it.mode);b.onclick=()=>{if(it.mode===b.dataset.m)return;it.mode=b.dataset.m;it.touched=true;it.auto=false;
+    if(it.mode==='graph'&&it.fit===undefined)it.fit=true;if(it.mode==='photo'&&!it.ph)it.ph={fit:'cover'};redo()}});
+  d.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{it.extras.push({pos:b.dataset.a,mode:'graph',gid:null,fit:false,w:exW(it),ph:{fit:'cover',ratio:'1.835'}});redo()});
+  if(it.mode==='graph')d.appendChild(graphPick(it,{w:it.w,h:it.h},()=>{it.auto=false}));
+  if(it.mode==='photo')d.appendChild(photoPick(it.ph,()=>({w:it.w,h:it.h}),false));
   it.extras.forEach((ex,k)=>{
     const box=document.createElement('div');box.className='extra';
     box.innerHTML=`<div class="head">${ex.pos==='above'?'⬆ 위에':'⬇ 아래에'} 새 그림
-      <span class="seg" style="margin:0"><button data-e="graph">📊 그래프</button><button data-e="photo">🖼 사진</button></span>
-      <button class="btn tiny x">✕ 빼기</button></div>`;
-    box.querySelectorAll('[data-e]').forEach(b=>{b.classList.toggle('on',b.dataset.e===ex.mode);b.onclick=()=>{ex.mode=b.dataset.e;if(ex.mode==='photo'&&ex.ratioSel==='keep')ex.ratioSel=String(1.835);d.replaceWith(itemCard(it));refreshSave()}});
-    box.querySelector('.x').onclick=()=>{it.extras.splice(k,1);d.replaceWith(itemCard(it));refreshSave()};
-    const exw=it.tac?it.w:Math.max(it.w,40000);
-    box.appendChild(editor(ex,{w:exw,h:Math.round(exw/1.6),get ratioSel(){return ex.ratioSel},set ratioSel(v){ex.ratioSel=v}},ex.mode,true,()=>{}));
+      <span class="seg" style="margin:0"><button type="button" data-e="graph">📊 그래프</button><button type="button" data-e="photo">🖼 사진</button></span>
+      <button type="button" class="btn tiny del x">✕ 빼기</button></div>`;
+    box.querySelectorAll('[data-e]').forEach(b=>{b.classList.toggle('on',b.dataset.e===ex.mode);b.onclick=()=>{ex.mode=b.dataset.e;redo()}});
+    box.querySelector('.x').onclick=()=>{it.extras.splice(k,1);redo()};
+    box.appendChild(ex.mode==='graph'?graphPick(ex,null):photoPick(ex.ph,()=>({w:ex.w,h:Math.round(ex.w/+ex.ph.ratio)}),true));
     d.appendChild(box);
   });
   return d;
 }
-function guessType(it){
-  const s=(it.where+' '+it.origName).replace(/\s/g,'');
-  if(/만족/.test(s))return'sat';if(/성별/.test(s))return'sex';if(/연령|나이/.test(s))return'age';return'prepost';
-}
-const RATIOS=[['2.12','길게 (사전·사후 모양)'],['1.6','16 : 10 (만족도 모양)'],[String(4/3),'4 : 3'],['1','정사각형'],['1.835','사진 칸 모양']];
-function editor(obj,slot,mode,isExtra){
-  const ed=document.createElement('div');ed.className='editor';
-  const left=document.createElement('div'),right=document.createElement('div');right.className='prev';
-  ed.append(left,right);
-  const cv=document.createElement('canvas'),info=document.createElement('div');info.className='meta';
-  const dl=document.createElement('button');dl.className='btn tiny';dl.textContent='⬇ 그림 받기(PNG)';
-  right.append(cv,info,dl);
-  const ratioField=()=>{const f=document.createElement('label');f.className='f';
-    const keep=isExtra?'':`<option value="keep">칸 비율 그대로 (${(slot.w/7200*2.54).toFixed(1)} × ${(slot.h/7200*2.54).toFixed(1)} cm)</option>`;
-    f.innerHTML=`그림 모양 (가로는 그대로, 세로만 바뀌어요)<select>${keep}${RATIOS.map(r=>`<option value="${r[0]}">${r[1]}</option>`).join('')}</select>`;
-    const sel=f.querySelector('select');if(!slot.ratioSel)slot.ratioSel=isExtra?RATIOS[1][0]:'keep';sel.value=slot.ratioSel;
-    sel.onchange=()=>{slot.ratioSel=sel.value;draw()};return f};
-  let draw;
-  if(mode==='photo'){
-    const ph=obj.ph;
-    left.innerHTML=`<label class="f">넣을 사진<input type="file" accept="image/png,image/jpeg,image/gif,image/bmp,image/webp"></label>
-     <label class="f">맞추는 방법<select><option value="cover">칸에 꽉 채우기 (가장자리 조금 잘림)</option><option value="contain">전체 보이기 (남는 곳은 흰색)</option></select></label>`;
-    const fi=left.querySelector('input'),fs=left.querySelector('select');fs.value=ph.fit;
-    left.appendChild(ratioField());
-    fi.onchange=()=>{const f=fi.files[0];if(!f)return;const img=new Image();img.onload=()=>{ph.img=img;ph.name=f.name;draw();refreshSave()};img.src=URL.createObjectURL(f)};
-    fs.onchange=()=>{ph.fit=fs.value;draw()};
-    draw=()=>{const t=targetSize(slot);
-      if(!ph.img){cv.width=300;cv.height=Math.round(300*t.h/t.w);const c=cv.getContext('2d');c.fillStyle='#f4f7fa';c.fillRect(0,0,cv.width,cv.height);c.fillStyle='#889';c.font='15px sans-serif';c.textAlign='center';c.fillText('사진을 골라주세요',cv.width/2,cv.height/2);info.textContent='';dl.hidden=true;return}
-      const out=renderPhoto(ph.img,t.w,t.h,ph.fit);cv.width=out.width;cv.height=out.height;cv.getContext('2d').drawImage(out,0,0);
-      info.innerHTML=`<span>${esc(ph.name)}</span><span>${(t.w/7200*2.54).toFixed(1)} × ${(t.h/7200*2.54).toFixed(1)} cm</span>`;dl.hidden=true};
-  }else{
-    const g=obj.g;
-    const typeSel=`<label class="f">그래프 종류<select data-k="type">${Object.keys(TYPE_NAME).map(k=>`<option value="${k}">${TYPE_NAME[k]}</option>`).join('')}</select></label>`;
-    const build=()=>{
-      left.innerHTML=typeSel+`<label class="f">지역 (예: 신지면)<input type="text" data-k="region"></label><label class="f">제목<input type="text" data-k="title"></label><div data-k="data"></div>
-       <div class="f">색 바꾸기 <span class="cols"></span><button class="btn tiny" data-k="resetc" style="align-self:flex-start">기본 색으로</button></div>`;
-      left.appendChild(ratioField());
-      const q=k=>left.querySelector(`[data-k="${k}"]`);
-      q('type').value=g.type;
-      q('type').onchange=e=>{const ng=newGraph(e.target.value,g.region);Object.keys(ng).forEach(k=>{if(!['region','sat','sex','age','ppText','sheet'].includes(k))g[k]=ng[k]});g.type=ng.type;delete g.titleOverride;
-        if(isExtra)slot.ratioSel=String(DEF[g.type].ratio);build();draw()};
-      q('region').value=g.region;q('region').oninput=e=>{g.region=e.target.value.trim();if(g.titleOverride==null)q('title').value=gTitle(g);autoSheet(g);draw()};
-      q('title').value=gTitle(g);q('title').oninput=e=>{g.titleOverride=e.target.value;draw()};
-      const cols=left.querySelector('.cols');
-      g.colors.forEach((c,i)=>{const l=document.createElement('label');l.innerHTML=`<input type="color" value="${c}">${esc(g.cn[i])}`;
-        l.querySelector('input').oninput=e=>{g.colors[i]=e.target.value;store.set('colors_'+g.type,g.colors);draw()};cols.appendChild(l)});
-      q('resetc').onclick=()=>{g.colors=DEF[g.type].c.slice();store.set('colors_'+g.type,g.colors);build();draw()};
-      const D=q('data');
-      if(g.type==='prepost'){
-        autoSheet(g);
-        const opts=XLS?XLS.sheets.map(s=>`<option ${s.name===g.sheet?'selected':''}>${esc(s.name)}</option>`).join(''):'';
-        D.innerHTML=(XLS?`<label class="f">엑셀 시트 (지역)<select data-k="sheet"><option value="">— 직접 입력 —</option>${opts}</select></label>`:`<p class="warn">위의 「📗 사전·사후 엑셀 넣기」로 엑셀을 넣으면 숫자가 자동으로 들어가요.</p>`)+
-          `<label class="f">사전 · 사후 점수 (한 줄에 한 명: 사전 사후)<textarea data-k="pp" placeholder="8 4&#10;6 2"></textarea></label>`;
-        const ta=D.querySelector('textarea');ta.value=g.ppText;ta.oninput=()=>{g.ppText=ta.value;g.sheet='';const s=D.querySelector('select');if(s)s.value='';draw()};
-        const ss=D.querySelector('select');if(ss)ss.onchange=()=>{g.sheet=ss.value;fillSheet(g);ta.value=g.ppText;if(g.sheet&&!g.region){g.region=g.sheet.endsWith('면')||g.sheet.endsWith('읍')?g.sheet:g.sheet+'면';q('region').value=g.region;if(g.titleOverride==null)q('title').value=gTitle(g)}draw()};
-      }else if(g.type==='sat'){
-        D.innerHTML=`<div class="f">만족도 표 (사람 수)<div class="grid5"><span></span>${SAT_LV.map(x=>`<span class="h">${x.replace(' ','<br>')}</span>`).join('')}
-          ${SAT_ITEMS.map((it,i)=>`<span>${it}</span>${SAT_LV.map((_,k)=>`<input type="number" min="0" data-i="${i}" data-j="${k}" value="${g.sat[i][k]||''}">`).join('')}`).join('')}</div><span data-k="sum"></span></div>`;
-        const sum=()=>{const t=g.sat.map(r=>r.reduce((a,b)=>a+(+b||0),0));q('sum').textContent='합계: '+t.join(' / ')+(new Set(t).size>1?'  ⚠ 항목마다 합계가 달라요':'')};
-        D.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{g.sat[+inp.dataset.i][+inp.dataset.j]=+inp.value||0;sum();draw()});sum();
-      }else if(g.type==='sex'){
-        D.innerHTML=`<div class="f">인원 (명)<div class="cols"><label>남 <input type="number" min="0" data-s="0" style="width:80px"></label><label>여 <input type="number" min="0" data-s="1" style="width:80px"></label></div></div>`;
-        D.querySelectorAll('input').forEach(inp=>{inp.value=g.sex[+inp.dataset.s];inp.oninput=()=>{g.sex[+inp.dataset.s]=inp.value;draw()}});
-      }else{
-        D.innerHTML=`<div class="f">연령별 인원 (명)${g.age.map((r,i)=>`<div class="cols" style="margin-top:4px"><input type="text" data-a="${i}" value="${esc(r[0])}" style="width:110px"><input type="number" min="0" data-n="${i}" value="${esc(r[1])}" style="width:80px"> 명</div>`).join('')}</div>`;
-        D.querySelectorAll('[data-a]').forEach(inp=>inp.oninput=()=>{g.age[+inp.dataset.a][0]=inp.value;draw()});
-        D.querySelectorAll('[data-n]').forEach(inp=>inp.oninput=()=>{g.age[+inp.dataset.n][1]=inp.value;draw()});
-      }
-    };
-    build();
-    draw=()=>{const t=targetSize(slot),out=renderGraph(g,t.w,t.h,2);cv.width=out.width;cv.height=out.height;cv.getContext('2d').drawImage(out,0,0);
-      info.innerHTML=`<span>${TYPE_NAME[g.type]}</span><span>${(t.w/7200*2.54).toFixed(1)} × ${(t.h/7200*2.54).toFixed(1)} cm</span>`;dl.hidden=false};
-    dl.onclick=()=>{const t=targetSize(slot);renderGraph(g,t.w,t.h,3).toBlob(b=>download(b,(TYPE_NAME[g.type]+'_'+(g.region||'그래프')).replace(/[\\/:*?"<>|]/g,'')+'.png'),'image/png')};
-  }
-  ed._draw=draw;
-  if(document.fonts&&document.fonts.load)document.fonts.load(F(16)).then(()=>draw(),()=>draw());else draw();
-  return ed;
-}
-function autoSheet(g){
-  if(!XLS||g.type!=='prepost'||g.sheetTouched)return;
-  const r=(g.region||'').replace(/(읍|면|동)$/,'');if(!r)return;
-  const s=XLS.sheets.find(s=>s.name.includes(r));if(s&&s.name!==g.sheet){g.sheet=s.name;fillSheet(g)}
-}
-function fillSheet(g){const s=XLS&&XLS.sheets.find(s=>s.name===g.sheet);if(s)g.ppText=prePostFromRows(s.rows).map(r=>r.join(' ')).join('\n')}
-
 function refreshSave(){
   if(!DOC){$('saveBtn').disabled=true;return}
   const n=DOC.items.filter(it=>it.mode!=='keep').length+DOC.items.reduce((a,it)=>a+it.extras.length,0);
-  $('saveBtn').disabled=!n;$('saveBtn').textContent=n?`💾 새 한글 파일 받기 (${n}개 바뀜)`:'💾 새 한글 파일 받기';
-  document.querySelectorAll('.card').forEach(()=>{});
+  $('saveBtn').disabled=!n;$('saveBtn').textContent=n?`💾 새 한글 파일 받기 (그림 ${n}개 바뀜)`:'💾 새 한글 파일 받기';
 }
-function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}
 
 /* ====================== 저장: 그림만 바꾼 새 .hwpx ====================== */
-const canvasPng=cv=>new Promise(r=>cv.toBlob(b=>b.arrayBuffer().then(x=>r(new Uint8Array(x))),'image/png'));
-const canvasJpg=cv=>new Promise(r=>cv.toBlob(b=>b.arrayBuffer().then(x=>r(new Uint8Array(x))),'image/jpeg',0.9));
+const canvasBytes=(cv,jpg)=>new Promise(r=>cv.toBlob(b=>b.arrayBuffer().then(x=>r(new Uint8Array(x))),jpg?'image/jpeg':'image/png',0.9));
 function attr(el,name){return(new RegExp('\\b'+name+'="([^"]*)"').exec(el)||[])[1]}
 function picXml({pid,zOrder,numType,textWrap,textFlow,instid,offset,renderTM,binId,wPx,hPx,w,h,curW,curH,pos,outMargin,caption,comment}){
   const OW=wPx*HU,OH=hPx*HU,sx=(curW/OW).toFixed(6),sy=(curH/OH).toFixed(6);
@@ -560,45 +631,41 @@ async function saveHwpx(){
     const pidUsed=new Set([...allXml.matchAll(/<hp:(?:pic|ole|tbl|rect|line|container)\b[^>]*\bid="(\d+)"/g)].map(m=>m[1]));
     const newPid=()=>{let x;do{x=String(1000000000+Math.floor(Math.random()*900000000))}while(pidUsed.has(x));pidUsed.add(x);return x};
     let zMax=Math.max(0,...[...allXml.matchAll(/zOrder="(\d+)"/g)].map(m=>+m[1]));
-    const newBins=[]; // {id,href,data}
-    const addBin=async(cv,jpg)=>{const id='image'+nextNum++;const ext=jpg?'jpg':'png';const href='BinData/'+id+'.'+ext;newBins.push({id,href,mt:jpg?'image/jpg':'image/png',data:jpg?await canvasJpg(cv):await canvasPng(cv)});return id};
-    const makePic=async(spec,slotW,slotH,base)=>{ // spec: {mode,g,ph,ratioSel}
-      const t=targetSize({w:slotW,h:slotH,ratioSel:spec.ratioSel});
+    const newBins=[];
+    // 그릴 것 하나 → <hp:pic> 글자. size:{w,h}, keep: 원래 칸 크기 정보를 그대로 쓸지
+    const makePic=async(what,size,base)=>{
       let cv,comment,jpg=false;
-      if(spec.mode==='photo'){if(!spec.ph||!spec.ph.img)return null;cv=renderPhoto(spec.ph.img,t.w,t.h,spec.ph.fit);jpg=true;comment=`그림입니다.\n원본 그림의 이름: ${spec.ph.name}\n원본 그림의 크기: 가로 ${cv.width}pixel, 세로 ${cv.height}pixel`}
-      else{cv=renderGraph(spec.g,t.w,t.h,3);comment=`그림입니다.\n원본 그림의 이름: ${TYPE_NAME[spec.g.type]}_${spec.g.region||'그래프'}.png\n원본 그림의 크기: 가로 ${cv.width}pixel, 세로 ${cv.height}pixel`}
-      const binId=await addBin(cv,jpg);
-      const keepSize=!spec.ratioSel||spec.ratioSel==='keep';
-      return picXml(Object.assign({binId,wPx:cv.width,hPx:cv.height,w:t.w,h:t.h,curW:t.w,curH:t.h,comment},base(keepSize)));
+      if(what.photo){if(!what.photo.img)return null;cv=renderPhoto(what.photo.img,size.w,size.h,what.photo.fit);jpg=true;comment=`그림입니다.\n원본 그림의 이름: ${what.photo.name}\n원본 그림의 크기: 가로 ${cv.width}pixel, 세로 ${cv.height}pixel`}
+      else{if(!what.g)return null;cv=renderGraph(what.g,size.w,size.h,3);comment=`그림입니다.\n원본 그림의 이름: ${gName(what.g).replace(' · ','_')}.png\n원본 그림의 크기: 가로 ${cv.width}pixel, 세로 ${cv.height}pixel`}
+      const id='image'+nextNum++,href='BinData/'+id+(jpg?'.jpg':'.png');
+      newBins.push({id,href,mt:jpg?'image/jpg':'image/png',data:await canvasBytes(cv,jpg)});
+      return picXml(Object.assign({binId:id,wPx:cv.width,hPx:cv.height,w:size.w,h:size.h,curW:size.w,curH:size.h,comment},base));
     };
     const outSec=[];
     for(let si=0;si<DOC.sections.length;si++){
       const xml=DOC.sections[si].xml,edits=[];
       for(const it of DOC.items.filter(i=>i.sec===si)){
         if(it.mode!=='keep'){
-          const el=it.el;
-          const base=keepSize=>{
-            const curW=+attr((/<hp:curSz\b[^>]*>/.exec(el)||[''])[0],'width')||it.w,curH=+attr((/<hp:curSz\b[^>]*>/.exec(el)||[''])[0],'height')||it.h;
-            return{pid:attr(el,'id')||newPid(),zOrder:attr(el,'zOrder')||(++zMax),numType:attr(el,'numberingType')||'PICTURE',textWrap:attr(el,'textWrap')||'TOP_AND_BOTTOM',
-              textFlow:attr(el,'textFlow')||'BOTH_SIDES',instid:attr(el,'instid')||newPid(),offset:(/<hp:offset\b[^>]*\/>/.exec(el)||[])[0],
-              renderTM:(/<hc:transMatrix\b[^>]*\/>/.exec(el)||[])[0],pos:(/<hp:pos\b[^>]*\/>/.exec(el)||[NEWPOS])[0],
-              outMargin:(/<hp:outMargin\b[^>]*\/>/.exec(el)||[])[0],caption:(/<hp:caption\b[\s\S]*?<\/hp:caption>/.exec(el)||[])[0],
-              ...(keepSize?{curW,curH}:{})}};
-          const x=await makePic({mode:it.mode,g:it.g,ph:it.ph,ratioSel:it.ratioSel},it.w,it.h,base);
-          if(x)edits.push({at:it.start,end:it.end,text:x});
+          const el=it.el,g=byId(it.gid),same=it.mode==='photo'||it.fit!==false;
+          const size=it.mode==='photo'?{w:it.w,h:it.h}:g?specSize(it,{w:it.w,h:it.h},g):null;
+          const cs=(/<hp:curSz\b[^>]*>/.exec(el)||[''])[0];
+          const base={pid:attr(el,'id')||newPid(),zOrder:attr(el,'zOrder')||(++zMax),numType:attr(el,'numberingType')||'PICTURE',textWrap:attr(el,'textWrap')||'TOP_AND_BOTTOM',
+            textFlow:attr(el,'textFlow')||'BOTH_SIDES',instid:attr(el,'instid')||newPid(),offset:(/<hp:offset\b[^>]*\/>/.exec(el)||[])[0],
+            renderTM:(/<hc:transMatrix\b[^>]*\/>/.exec(el)||[])[0],pos:(/<hp:pos\b[^>]*\/>/.exec(el)||[NEWPOS])[0],
+            outMargin:(/<hp:outMargin\b[^>]*\/>/.exec(el)||[])[0],caption:(/<hp:caption\b[\s\S]*?<\/hp:caption>/.exec(el)||[])[0]};
+          if(same&&+attr(cs,'width')&&+attr(cs,'height')){base.curW=+attr(cs,'width');base.curH=+attr(cs,'height')}
+          const x=size&&await makePic(it.mode==='photo'?{photo:it.ph}:{g},size,base);
+          if(x){edits.push({at:it.start,end:it.end,text:x});
+            // 바뀐 그림이 있는 문단의 줄 배치 정보는 지워서 한글이 다시 계산하게 해요
+            const pEnd=it.para.end,ls=xml.lastIndexOf('<hp:linesegarray>',pEnd);
+            if(ls>it.end&&xml.slice(it.end,ls).indexOf('<hp:p ')<0){const le=xml.indexOf('</hp:linesegarray>',ls)+18;if(le>ls&&le<=pEnd)edits.push({at:ls,end:le,text:''})}}
         }
         for(const ex of it.extras){
-          const exw=it.tac?it.w:Math.max(it.w,40000);
-          const x=await makePic(ex,exw,Math.round(exw/1.6),()=>({pid:newPid(),zOrder:++zMax,numType:'PICTURE',textWrap:'TOP_AND_BOTTOM',textFlow:'BOTH_SIDES',instid:newPid(),pos:NEWPOS}));
+          const g=byId(ex.gid),size=ex.mode==='photo'?{w:ex.w,h:Math.round(ex.w/+ex.ph.ratio)}:g?ownSize(g,ex.w):null;
+          const x=size&&await makePic(ex.mode==='photo'?{photo:ex.ph}:{g},size,{pid:newPid(),zOrder:++zMax,numType:'PICTURE',textWrap:'TOP_AND_BOTTOM',textFlow:'BOTH_SIDES',instid:newPid(),pos:NEWPOS});
           if(!x)continue;
-          const p=it.para,open=p.open;
-          const para=`<hp:p id="0" paraPrIDRef="${attr(open,'paraPrIDRef')||0}" styleIDRef="${attr(open,'styleIDRef')||0}" pageBreak="0" columnBreak="0" merged="0"><hp:run charPrIDRef="${it.charPr}">${x}<hp:t/></hp:run></hp:p>`;
-          edits.push({at:ex.pos==='above'?p.start:p.end,end:ex.pos==='above'?p.start:p.end,text:para,ins:ex.pos});
-        }
-        // 바뀐 그림이 있는 문단의 줄 배치 정보는 지워서 한글이 다시 계산하게 해요
-        if(it.mode!=='keep'&&it.para){
-          const pEnd=it.para.end,ls=xml.lastIndexOf('<hp:linesegarray>',pEnd);
-          if(ls>it.end&&xml.slice(it.end,ls).indexOf('<hp:p ')<0){const le=xml.indexOf('</hp:linesegarray>',ls)+18;if(le>ls&&le<=pEnd)edits.push({at:ls,end:le,text:''})}
+          const p=it.para,open=p.open,at=ex.pos==='above'?p.start:p.end;
+          edits.push({at,end:at,text:`<hp:p id="0" paraPrIDRef="${attr(open,'paraPrIDRef')||0}" styleIDRef="${attr(open,'styleIDRef')||0}" pageBreak="0" columnBreak="0" merged="0"><hp:run charPrIDRef="${it.charPr}">${x}<hp:t/></hp:run></hp:p>`});
         }
       }
       // 뒤에서부터 바꿔야 위치가 안 틀려요 (같은 자리에 넣는 건 순서대로)
@@ -607,50 +674,41 @@ async function saveHwpx(){
       let s=xml;for(const e of edits)s=s.slice(0,e.at)+e.text+s.slice(e.end);
       outSec.push(s);
     }
-    // content.hpf 에 새 그림 등록
+    if(!newBins.length){alert('바꿀 그림이 없어요. 그래프나 사진을 골라주세요.');return}
     let hpf=DOC.hpf;
     const items=newBins.map(b=>`<opf:item id="${b.id}" href="${b.href}" media-type="${b.mt}" isEmbeded="1"/>`).join('');
     const secItem=/<opf:item\b[^>]*id="section0"[^>]*\/>/.exec(hpf);
     hpf=secItem?hpf.replace(secItem[0],items+secItem[0]):hpf.replace('</opf:manifest>',items+'</opf:manifest>');
-    const enc=new TextEncoder(),secNames=new Map(DOC.sections.map((s,i)=>[s.name,i]));
-    const entries=[];
+    const enc=new TextEncoder(),secNames=new Map(DOC.sections.map((s,i)=>[s.name,i])),entries=[];
     for(const z of DOC.zip){
       if(z.name==='Contents/content.hpf')entries.push({name:z.name,data:enc.encode(hpf)});
       else if(secNames.has(z.name))entries.push({name:z.name,data:enc.encode(outSec[secNames.get(z.name)])});
       else entries.push({name:z.name,ent:z});
     }
-    // 새 그림은 BinData 끝에 붙여요 (mimetype은 맨 앞 그대로)
-    let at=entries.map(e=>e.name).reduce((a,n,i)=>n.startsWith('BinData/')?i+1:a,1);
+    const at=entries.map(e=>e.name).reduce((a,n,i)=>n.startsWith('BinData/')?i+1:a,1);
     entries.splice(at,0,...newBins.map(b=>({name:b.href,data:b.data,store:true})));
-    const blob=await buildZip(entries);
     const nm=DOC.name.replace(/\.hwpx$/i,'')+' - 그래프.hwpx';
-    download(blob,nm);toast('✅ 저장했어요: '+nm,4000);
+    download(await buildZip(entries),nm);toast('✅ 저장했어요: '+nm,4000);
   }catch(e){console.error(e);alert('저장하다가 문제가 생겼어요.\n'+e.message)}
   finally{btn.textContent=old;refreshSave()}
 }
 
 /* ====================== 시작 ====================== */
-$('fontSel').value=FONT;
-$('fontSel').onchange=e=>{FONT=e.target.value;store.set('font',FONT);document.fonts.load(F(16)).finally(()=>DOC&&renderList())};
 async function takeHwpx(f){
   if(!f)return;
   if(!/\.hwpx$/i.test(f.name)){alert('.hwpx 파일만 넣을 수 있어요.\n.hwp 파일은 한글에서 「다른 이름으로 저장」→ 파일 형식 「HWPX」로 저장해 주세요.');return}
   try{if(DOC)DOC.items.forEach(i=>i.thumb&&URL.revokeObjectURL(i.thumb));await openHwpx(f)}catch(e){alert(e.message);return}
   $('docName').textContent='📄 '+f.name;$('picCount').textContent='그림 '+DOC.items.length+'개';
-  $('work').hidden=false;$('drop').querySelector('b').textContent='① 다른 한글 파일로 바꾸려면 여기를 누르세요';
-  renderList();
+  $('work').hidden=false;$('dropT').textContent='다른 한글 파일로 바꾸려면 여기를 누르세요';
+  $('st3').textContent=f.name;autoAssign();renderList();
 }
 $('hwpIn').onchange=e=>{takeHwpx(e.target.files[0]);e.target.value=''};
-const dr=$('drop');
-['dragenter','dragover'].forEach(t=>document.addEventListener(t,e=>{e.preventDefault();dr.classList.add('on')}));
-['dragleave','drop'].forEach(t=>document.addEventListener(t,e=>{e.preventDefault();if(t==='drop'||e.target===document.documentElement)dr.classList.remove('on')}));
-document.addEventListener('drop',e=>{const f=[...e.dataTransfer.files];const h=f.find(x=>/\.hwpx$/i.test(x.name)),x=f.find(x=>/\.xlsx$/i.test(x.name));if(h)takeHwpx(h);else if(x&&DOC)takeXlsx(x);else if(f[0])takeHwpx(f[0])});
-async function takeXlsx(f){if(!f)return;try{await openXlsx(f)}catch(e){alert('엑셀(.xlsx) 파일을 못 읽었어요.');return}
-  if(!XLS.sheets.length){alert('엑셀에서 「사전」「사후」 칸을 못 찾았어요.');return}
-  $('xlsName').hidden=false;$('xlsName').className='chip ok';$('xlsName').textContent='📗 '+f.name+' · 시트 '+XLS.sheets.map(s=>s.name).join(', ');
-  if(DOC){DOC.items.forEach(it=>{[it.g,...it.extras.map(e=>e.g)].forEach(g=>{if(g&&g.type==='prepost'){g.sheet='';autoSheet(g)}})});renderList()}}
-$('xlsIn').onchange=e=>{takeXlsx(e.target.files[0]);e.target.value=''};
+['dragenter','dragover'].forEach(t=>document.addEventListener(t,e=>{e.preventDefault();document.querySelectorAll('.drop').forEach(d=>d.classList.add('on'))}));
+['dragleave','drop'].forEach(t=>document.addEventListener(t,e=>{e.preventDefault();if(t==='drop'||!e.relatedTarget)document.querySelectorAll('.drop').forEach(d=>d.classList.remove('on'))}));
+document.addEventListener('drop',e=>{const f=[...e.dataTransfer.files],h=f.find(x=>/\.hwpx$/i.test(x.name)),x=f.find(x=>/\.xlsx$/i.test(x.name));
+  if(x){takeXlsx(x);if(STEP!==1)go(1)}if(h){go(3);takeHwpx(h)}if(!x&&!h&&f[0])alert('엑셀(.xlsx)이나 한글(.hwpx) 파일만 넣을 수 있어요.')});
 $('saveBtn').onclick=saveHwpx;
+renderTypes();renderMk();go(1);
 if(!canDeflate||typeof DecompressionStream==='undefined')alert('이 브라우저는 너무 오래돼서 쓸 수 없어요. 크롬이나 엣지 최신 버전으로 열어주세요.');
 </script>
 </body></html>
